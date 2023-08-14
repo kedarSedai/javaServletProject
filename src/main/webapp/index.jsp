@@ -6,7 +6,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<form action="" method="POST">
+<form action="user?page=login" method="POST">
     <div class="container">
         <div class="mb-3">
             <label for="username" class="form-label">Username</label>
@@ -16,7 +16,7 @@
             <label for="exampleInputPassword1" class="form-label">Password</label>
             <input type="password" name="password" class="form-control" id="exampleInputPassword1">
         </div>
-        <a href="pages/register.jsp"><b>New User Register?</b></a>
+        <a href="user?page=newUser"><b>New User Register?</b></a>
         <button type="submit" class="btn btn-primary">Login</button>
 
     </div>

@@ -30,7 +30,7 @@
             <label for="exampleInputPassword1" class="form-label">Password</label>
             <input type="password" name="password" class="form-control" id="exampleInputPassword1">
         </div>
-        <a href="../index.jsp"><b>Already a Member?</b></a>
+        <a href="user?page=loginUser"><b>Already a Member?</b></a>
         <button type="submit" class="btn btn-primary">Register</button>
     </div>
 </form>
