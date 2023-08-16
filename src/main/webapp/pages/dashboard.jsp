@@ -28,7 +28,7 @@
                     <a class="nav-link active" aria-current="page" href="#">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">UserList</a>
+                    <a class="nav-link" href="user?page=userList">UserList</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Logout</a>
@@ -38,30 +38,14 @@
     </div>
 
 </nav>
+
+
 <div class="container">
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">userName</th>
-            <th scope="col">email</th>
-            <th scope="col">address</th>
-            <th scope="col">Password</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${userList}" var="user">
-            <tr>
-                <td>${user.id}</td>
-                <td>${user.userName}</td>
-                <td>${user.email}</td>
-                <td>${user.address}</td>
-                <td>${user.password}</td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
+    <h1> Welcome <%= session.getAttribute("sn")%> </h1>
+
 </div>
+
+
 </body>
 </html>

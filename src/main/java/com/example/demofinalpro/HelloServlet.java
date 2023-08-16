@@ -4,6 +4,7 @@ import Model.User;
 import service.UserService;
 
 import java.io.*;
+import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -66,6 +67,7 @@ public class HelloServlet extends HttpServlet {
 
         }
 
+        ///
         if (page.equalsIgnoreCase("newUser")) {
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("pages/register.jsp");
             requestDispatcher.forward(req, resp);
@@ -77,15 +79,80 @@ public class HelloServlet extends HttpServlet {
         }
 
         if (page.equalsIgnoreCase("dashboard")) {
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("pages/dashboard.jsp");
+            requestDispatcher.forward(req, resp);
+        }
+
+        if (page.equalsIgnoreCase("userList")) {
             User user = new User();
             List<User> userList = new UserService().getUserList();
 
             req.setAttribute("user", user);
             req.setAttribute("userList", userList);
 
-
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("pages/dashboard.jsp");
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("pages/userList.jsp");
             requestDispatcher.forward(req, resp);
+        }
+
+        if (page.equalsIgnoreCase("userDetails")) {
+            int id = Integer.parseInt(req.getParameter("id"));
+            User user = new UserService().getUserRow(id);
+
+            req.setAttribute("user", user);
+            req.setAttribute("id", id);
+
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("pages/userDetails.jsp");
+            requestDispatcher.forward(req, resp);
+        }
+
+        if (page.equalsIgnoreCase("deleteUser")) {
+            int id = Integer.parseInt(req.getParameter("id"));
+            new UserService().deleteUser(id);
+
+            List<User> userList = new UserService().getUserList();
+            req.setAttribute("userList", userList);
+
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("pages/userList.jsp");
+            requestDispatcher.forward(req, resp);
+        }
+
+        if (page.equalsIgnoreCase("editUser")) {
+
+            // ID:
+            int id = Integer.parseInt(req.getParameter("id"));
+            User user = new UserService().getUserRow(id);
+
+            req.setAttribute("user", user);
+
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("pages/updateUser.jsp");
+            requestDispatcher.forward(req, resp);
+        }
+
+        if (page.equalsIgnoreCase("updateUser")) {
+
+            //step 1:
+            User user = new User();
+
+            int id = Integer.parseInt(req.getParameter("id"));
+
+            user.setUserName(req.getParameter("userName"));
+            user.setAddress(req.getParameter("address"));
+            user.setEmail(req.getParameter("email"));
+            user.setPassword(req.getParameter("password"));
+
+            try {
+                new UserService().editUser(id, user);
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            List<User> userList = new UserService().getUserList();
+            req.setAttribute("userList", userList);
+
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("pages/userList.jsp");
+            requestDispatcher.forward(req, resp);
+
         }
 
     }

@@ -72,14 +72,14 @@ public class UserService {
         return user;
     }
 
-    public List<User> getUserList(){
+    public List<User> getUserList() {
 
 
-        //list of users:
+        // list of users:
         List<User> userList = new ArrayList<>();
 
         //query:
-        String query = "select * from user" ;
+        String query = "select * from user";
 
         //prepared stm:
         PreparedStatement preparedStatement = new DBConnection().getStatement(query);
@@ -87,7 +87,7 @@ public class UserService {
         try {
             ResultSet rs = preparedStatement.executeQuery();
 
-            while ((rs.next())){
+            while ((rs.next())) {
                 User user = new User();
                 user.setId(rs.getInt("id"));
                 user.setUserName(rs.getString("username"));
@@ -97,10 +97,54 @@ public class UserService {
 
                 userList.add(user);
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return userList;
+    }
+
+
+    // GetRow data:
+    public User getUserRow(int id) {
+        User user = new User();
+        String query = "select * from user where id=?";
+        //prepared stm:
+        PreparedStatement preparedStatement = new DBConnection().getStatement(query);
+        try {
+            preparedStatement.setInt(1, id);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                user.setId(rs.getInt("id"));
+                user.setUserName(rs.getString("username"));
+                user.setEmail(rs.getString("email"));
+                user.setAddress(rs.getString("address"));
+                user.setPassword(rs.getString("password"));
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+
+    public void editUser(int id, User user) throws SQLException{
+
+        //step 1:
+        String query = "update user set username=?, email=?, address=?, password=?" + "where id=?";
+
+        //step 2:
+        PreparedStatement preparedStatement = new DBConnection().getStatement(query);
+
+        //step 3:
+        preparedStatement.setString(1, user.getUserName());
+        preparedStatement.setString(2, user.getEmail());
+        preparedStatement.setString(3, user.getAddress());
+        preparedStatement.setString(4, user.getPassword());
+        preparedStatement.setInt(5, id);
+        preparedStatement.execute();
     }
 
 
