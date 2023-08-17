@@ -34,6 +34,7 @@
                 <td>${user.address}</td>
                 <td>${user.password}</td>
                 <td><a href="user?page=userDetails&id=${user.id}"> User Details</a></td>
+<%--                <td><a href="user?page=userDetails&id=${user.id}"> Add users</a></td>--%>
             </tr>
         </c:forEach>
         </tbody>

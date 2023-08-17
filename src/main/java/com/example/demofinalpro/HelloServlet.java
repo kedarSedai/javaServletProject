@@ -1,6 +1,7 @@
 package com.example.demofinalpro;
 
 import Model.User;
+import PasswordHashing.HashPassword;
 import service.UserService;
 
 import java.io.*;
@@ -33,7 +34,8 @@ public class HelloServlet extends HttpServlet {
             user.setUserName(req.getParameter("userName"));
             user.setEmail(req.getParameter("email"));
             user.setAddress(req.getParameter("address"));
-            user.setPassword(req.getParameter("password"));
+//            user.setPassword(req.getParameter("password"));
+            user.setPassword(HashPassword.passwordHashing(req.getParameter("password")));
 
             new UserService().insertUser(user);
 
@@ -44,7 +46,7 @@ public class HelloServlet extends HttpServlet {
         if (page.equalsIgnoreCase("login")) {
             // form data:
             String name = req.getParameter("userName");
-            String password = req.getParameter("password");
+            String password = HashPassword.passwordHashing(req.getParameter("password"));
 
             // call service:
             User user = new UserService().getUserLogin(name, password);
